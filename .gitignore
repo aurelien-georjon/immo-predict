@@ -39,3 +39,24 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# --- Données volumineuses / perso ---
+data/
+*.csv
+*.parquet
+*.geojson
+*.zip
+*.gz
+*.pickle
+*.pkl
+*.xlsx
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+env/
+venv/
+
+# --- Autres fichiers locaux ---
+*.ipynb_checkpoints
