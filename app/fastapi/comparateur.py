@@ -8,10 +8,9 @@ import os
 # --- Application FastAPI ---
 app = FastAPI(title="ImmoPredict Comparateur API")
 
-# --- Autoriser les requêtes depuis ton front Next.js ---
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # ou ["http://localhost:3000"]
+    allow_origins=["*"],  
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -24,10 +23,10 @@ df = pd.read_parquet(BASE_PATH)
 df = df.dropna(subset=["longitude", "latitude", "surface_reelle_bati", "nombre_pieces_principales"])
 print(f"{len(df)} lignes chargées.")
 
-# --- Géocodage d'une adresse (OpenStreetMap / Nominatim) ---
+# --- Géocodage d'une adresse (OpenStreetMap / Nominatim) / Récupération de la longitude et latitude d'une adresse ---
 def geocode_adresse(adresse: str):
-    url = "https://nominatim.openstreetmap.org/search"
-    params = {"q": adresse, "format": "json", "limit": 1}
+    url = "https://nominatim.openstreetmap.org/search" 
+    params = {"q": adresse, "format": "json", "limit": 1}#Envoie d'une adresse q, on récupère un json et on veut une correspondance vraie (1)
     headers = {"User-Agent": "ImmoPredictApp"}
     r = requests.get(url, params=params, headers=headers, timeout=5)
     r.raise_for_status()
