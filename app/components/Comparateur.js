@@ -99,18 +99,35 @@ export default function Comparateur() {
 
       {error && <p className="text-red-600 mt-4">{error}</p>}
 
-      {resultats && (
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold mb-2">Résultats :</h3>
-          <ul className="space-y-1">
-            {resultats.map((r, i) => (
-              <li key={i} className="text-sm text-gray-800">
-                {r.nom_commune} — {r.typologie} — {r.surface_reelle_bati} m² — {r.valeur_fonciere} €
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {resultats && resultats.length > 0 && (
+  <div className="mt-6">
+    <h3 className="text-lg font-semibold mb-3">Résultats :</h3>
+
+    <table className="w-full border border-gray-300 text-sm">
+      <thead className="bg-gray-100">
+        <tr>
+          <th className="border border-gray-300 px-4 py-3 text-left">Date de mutation</th>
+          <th className="border border-gray-300 px-4 py-3 text-left">Commune</th>
+          <th className="border border-gray-300 px-4 py-3 text-left">Typologie</th>
+          <th className="border border-gray-300 px-4 py-3 text-right">Surface (m²)</th>
+          <th className="border border-gray-300 px-4 py-3 text-right">Valeur (€)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {resultats.map((r, i) => (
+          <tr key={i} className="hover:bg-gray-50">
+            <td className="border border-gray-300 px-4 py-3 whitespace-nowrap">{r.date_mutation}</td>
+            <td className="border border-gray-300 px-4 py-3 whitespace-nowrap">{r.nom_commune}</td>
+            <td className="border border-gray-300 px-4 py-3 whitespace-nowrap">{r.typologie}</td>
+            <td className="border border-gray-300 px-4 py-3 text-right whitespace-nowrap">{r.surface_reelle_bati}</td>
+            <td className="border border-gray-300 px-4 py-3 text-right whitespace-nowrap">{r.valeur_fonciere ? Number(r.valeur_fonciere).toLocaleString("fr-FR") : "-"}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
+
     </div>
   );
 }

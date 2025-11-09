@@ -17,7 +17,6 @@ export default function ComparateurPage() {
           selon les données DVF.
         </p>
 
-        {/* --- Le vrai composant --- */}
         <Comparateur />
 
         <div className="mt-8 text-center">
