@@ -9,7 +9,6 @@ const CarteRenta = () => {
   const [departement, setDepartement] = useState("");
   const [typologie, setTypologie] = useState("");
   const [filteredFeatures, setFilteredFeatures] = useState([]);
-  const [showCalculation, setShowCalculation] = useState(false);
   const [showRenta, setShowRenta] = useState(false);
   const [showConfiance, setShowConfiance] = useState(false);
 
@@ -71,59 +70,54 @@ const CarteRenta = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-4 text-center">
-      Rentabilité par commune (carte interactive)
-      </h1>
-
-      <div className="text-md text-gray-500 mb-4">
+      <div className="text-base md:text-lg text-gray-700 bg-gray-50 border border-gray-200 rounded-xl p-5 mb-6 shadow-sm">
         <button
-          className="font-semibold underline hover:text-blue-600 focus:outline-none"
+          className="font-semibold text-blue-700 underline hover:text-blue-800 focus:outline-none text-lg"
           onClick={() => setShowRenta((v) => !v)}
         >
           Comment la rentabilité est-elle calculée ?
         </button>
+
         {showRenta && (
-          <div className="mt-2">
-            Pour chaque bien pour lequel nous disposons de données de vente, nous estimons un loyer moyen en fonction de sa commune et de sa typologie. Nous distinguons trois types de biens : les maisons, les appartements de type T1/T2 (1 à 2 pièces), et les appartements T3 et plus (3 pièces et plus).<br />
-            La rentabilité brute est ensuite calculée selon la formule suivante : <br />
-            <p className="text-center">
+          <div className="mt-3 leading-relaxed">
+            Pour chaque bien disposant de données de vente, un loyer moyen est estimé à partir des informations de la commune et du type de logement.
+            Trois catégories sont distinguées : les <strong>maisons</strong>, les <strong>appartements T1/T2</strong> (1 à 2 pièces) et les <strong>appartements T3 et plus</strong> (3 pièces ou davantage).<br />
+            <br />
+            La rentabilité brute est ensuite calculée avec la formule suivante :
+            <p className="text-center mt-3 text-700 font-medium">
               <strong>Rentabilité brute</strong> = (Loyer annuel estimé / Prix d'achat) × 100
             </p>
           </div>
         )}
-        <br />
+
+        <hr className="my-5 border-gray-300" />
+
         <button
-          className="font-semibold underline hover:text-blue-600 focus:outline-none mt-2"
+          className="font-semibold text-blue-700 underline hover:text-blue-800 focus:outline-none text-lg"
           onClick={() => setShowConfiance((v) => !v)}
         >
           Comment l'indice de confiance est-il calculé ?
         </button>
+
         {showConfiance && (
-          <div className="mt-2">
-            L'indice de confiance est basé sur la qualité des données de loyers estimés que nous récupérons, ainsi que sur le volume de ventes enregistrées dans chaque commune.
+          <div className="mt-3 leading-relaxed">
+            L’indice de confiance évalue la fiabilité de l’estimation selon la qualité des données de loyers disponibles
+            et le volume de ventes observées dans la commune. Un indice plus élevé indique une estimation plus représentative du marché local.
           </div>
         )}
       </div>
 
-      <div className="flex items-center justify-center mb-4">
-        <span className="text-lg font-semibold text-gray-700">
-          Fonctionnement de la carte :
-          <span className="font-normal text-gray-600"> Choisissez un département et une typologie de bien pour afficher les données sur la carte.</span>
-        </span>
-      </div>
-
-      <div className="flex gap-4 mb-4 justify-center">
+      {/* Sélecteurs */}
+      <div className="flex flex-wrap justify-center gap-4 mb-6">
         <select
           value={departement}
           onChange={(e) => setDepartement(e.target.value)}
-          className="border p-2"
+          className="border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 min-w-[180px]"
         >
           <option value="">-- Département --</option>
           {geoData &&
             Array.from(
-              new Set(
-                geoData.features.map((f) => f.properties.code_departement)
-              )
+              new Set(geoData.features.map((f) => f.properties.code_departement))
             )
               .sort()
               .map((dep) => (
@@ -136,14 +130,13 @@ const CarteRenta = () => {
         <select
           value={typologie}
           onChange={(e) => setTypologie(e.target.value)}
-          className="border p-2"
+          className="border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 min-w-[180px]"
         >
           <option value="">-- Typologie --</option>
           <option value="t1_t2">T1/T2</option>
           <option value="t3_plus">T3+</option>
           <option value="maison">Maison</option>
         </select>
-
       </div>
 
       {departement && typologie && filteredFeatures.length === 0 && (

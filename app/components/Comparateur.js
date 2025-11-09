@@ -53,7 +53,6 @@ export default function Comparateur() {
 
   return (
     <div className="max-w-xl mx-auto p-4 relative">
-      <h2 className="text-2xl font-semibold mb-4">Comparer les 10 logements les plus proches</h2>
 
       <div className="relative">
         <input

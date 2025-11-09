@@ -39,7 +39,7 @@ export default function Prediction() {
     setResultat(null);
     try {
       const res = await fetch(
-        `http://127.0.0.1:8001/prediction?adresse=${encodeURIComponent(adresse)}&typologie=${typologie}&surface=${surface}&nb_pieces=${nbPieces}`
+        `http://127.0.0.1:8000/prediction?adresse=${encodeURIComponent(adresse)}&typologie=${typologie}&surface=${surface}&nb_pieces=${nbPieces}`
       );
       const data = await res.json();
       if (data.error) setError(data.error);
@@ -52,8 +52,6 @@ export default function Prediction() {
 
   return (
     <div className="max-w-xl mx-auto p-4 relative">
-      <h2 className="text-2xl font-semibold mb-4">Estimation de prix immobilier</h2>
-
       {/* Adresse */}
       <div className="relative">
         <input
